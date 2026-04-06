@@ -1,0 +1,818 @@
+{
+  "tags": [
+    {
+      "tag": "llm",
+      "count": 14,
+      "description": "Large language model resources and tools",
+      "list_ids": [
+        "ai-agents-for-beginners",
+        "awesome-generative-ai",
+        "awesome-gpt",
+        "awesome-langchain",
+        "awesome-llm",
+        "awesome-prompt-engineering",
+        "generative-ai-for-beginners",
+        "langchain",
+        "langflow",
+        "learn-prompting",
+        "llms-from-scratch",
+        "ollama",
+        "open-webui",
+        "prompt-engineering-guide"
+      ]
+    },
+    {
+      "tag": "tools",
+      "count": 14,
+      "description": "Developer tools and utilities",
+      "list_ids": [
+        "awesome-chatgpt-humanloop",
+        "awesome-chatgpt-sindresorhus",
+        "awesome-dataviz-hal9",
+        "awesome-db",
+        "awesome-db-tools",
+        "awesome-generative-ai-filipecalegario",
+        "awesome-langchain",
+        "awesome-mongodb",
+        "awesome-mysql",
+        "awesome-opensource-data-engineering",
+        "awesome-postgres",
+        "awesome-python",
+        "awesome-rust",
+        "datascience-python"
+      ]
+    },
+    {
+      "tag": "libraries",
+      "count": 12,
+      "description": "Code libraries and packages",
+      "list_ids": [
+        "awesome-ai-sdks",
+        "awesome-dataviz",
+        "awesome-dataviz-hal9",
+        "awesome-dataviz-javierluraschi",
+        "awesome-db",
+        "awesome-go",
+        "awesome-javascript",
+        "awesome-machine-learning",
+        "awesome-python",
+        "awesome-python-data-science",
+        "awesome-rust",
+        "datascience-python"
+      ]
+    },
+    {
+      "tag": "research",
+      "count": 10,
+      "description": "Research-focused collections",
+      "list_ids": [
+        "autonomous-agents",
+        "awesome-deep-learning",
+        "awesome-graph-generation",
+        "awesome-llm",
+        "awesome-llm-powered-agent",
+        "awesome-prompt-engineering",
+        "awesome-public-datasets",
+        "awesome-public-datasets-caesar",
+        "awesome-visualization-research",
+        "deep-learning-papers-reading-roadmap"
+      ]
+    },
+    {
+      "tag": "learning",
+      "count": 9,
+      "description": "Educational resources and learning paths",
+      "list_ids": [
+        "awesome-data-visualization-alpers",
+        "awesome-database-learning",
+        "best-websites-programmer",
+        "build-your-own-x",
+        "data-engineer-roadmap",
+        "developer-roadmap",
+        "free-programming-books",
+        "machine-learning-tutorials",
+        "project-based-learning"
+      ]
+    },
+    {
+      "tag": "databases",
+      "count": 7,
+      "description": "Database resources and tools",
+      "list_ids": [
+        "awesome-data-engineering",
+        "awesome-database-learning",
+        "awesome-db",
+        "awesome-db-tools",
+        "awesome-mongodb",
+        "awesome-mysql",
+        "awesome-postgres"
+      ]
+    },
+    {
+      "tag": "frameworks",
+      "count": 7,
+      "description": "Software frameworks and libraries",
+      "list_ids": [
+        "awesome-ai-agents",
+        "awesome-ai-sdks",
+        "awesome-bigdata",
+        "awesome-dataviz-hal9",
+        "awesome-go",
+        "awesome-machine-learning",
+        "awesome-python"
+      ]
+    },
+    {
+      "tag": "papers",
+      "count": 7,
+      "description": "Research papers and academic resources",
+      "list_ids": [
+        "autonomous-agents",
+        "awesome-database-learning",
+        "awesome-llm",
+        "awesome-llm-agents",
+        "awesome-llm-powered-agent",
+        "awesome-visualization-research",
+        "deep-learning-papers-reading-roadmap"
+      ]
+    },
+    {
+      "tag": "chatgpt",
+      "count": 6,
+      "description": "ChatGPT tools, prompts, and resources",
+      "list_ids": [
+        "awesome-chatgpt-humanloop",
+        "awesome-chatgpt-prompts",
+        "awesome-chatgpt-sindresorhus",
+        "awesome-gpt",
+        "best-gpts",
+        "prompt-engineering-guide"
+      ]
+    },
+    {
+      "tag": "visualization",
+      "count": 6,
+      "description": "Visualization resources",
+      "list_ids": [
+        "awesome-chartjs",
+        "awesome-d3",
+        "awesome-data-science-viz",
+        "awesome-data-visualization-alpers",
+        "awesome-visualization-research",
+        "awesome-visualization-tasks"
+      ]
+    },
+    {
+      "tag": "datasets",
+      "count": 5,
+      "description": "Data sources and datasets",
+      "list_ids": [
+        "awesome-data",
+        "awesome-json-datasets",
+        "awesome-public-datasets",
+        "awesome-public-datasets-caesar",
+        "game-datasets"
+      ]
+    },
+    {
+      "tag": "deep-learning",
+      "count": 5,
+      "description": "Deep learning tutorials, frameworks, and papers",
+      "list_ids": [
+        "awesome-deep-learning",
+        "awesome-graph-generation",
+        "awesome-machine-learning",
+        "deep-learning-papers-reading-roadmap",
+        "machine-learning-tutorials"
+      ]
+    },
+    {
+      "tag": "generative-ai",
+      "count": 5,
+      "description": "Generative AI tools and models",
+      "list_ids": [
+        "ai-collection",
+        "awesome-ai-tools",
+        "awesome-generative-ai",
+        "awesome-generative-ai-filipecalegario",
+        "generative-ai-for-beginners"
+      ]
+    },
+    {
+      "tag": "machine-learning",
+      "count": 5,
+      "description": "Machine learning frameworks, tools, and resources",
+      "list_ids": [
+        "awesome-datascience",
+        "awesome-machine-learning",
+        "awesome-python-data-science",
+        "game-datasets",
+        "machine-learning-tutorials"
+      ]
+    },
+    {
+      "tag": "meta",
+      "count": 5,
+      "description": "Meta-lists and indexes of curated collections",
+      "list_ids": [
+        "awesome",
+        "awesome-awesome-awesome",
+        "awesome-awesomeness",
+        "lists",
+        "the-book-of-secret-knowledge"
+      ]
+    },
+    {
+      "tag": "openai",
+      "count": 5,
+      "description": "OpenAI ecosystem resources",
+      "list_ids": [
+        "awesome-ai-gpts",
+        "awesome-chatgpt-sindresorhus",
+        "awesome-gpt",
+        "awesome-gpt-agents",
+        "best-gpts"
+      ]
+    },
+    {
+      "tag": "tutorials",
+      "count": 5,
+      "description": "Learning tutorials and guides",
+      "list_ids": [
+        "awesome-datascience",
+        "awesome-deep-learning",
+        "build-your-own-x",
+        "machine-learning-tutorials",
+        "project-based-learning"
+      ]
+    },
+    {
+      "tag": "ai-agents",
+      "count": 4,
+      "description": "AI agent frameworks and platforms",
+      "list_ids": [
+        "ai-agents-for-beginners",
+        "awesome-ai-agents",
+        "awesome-llm-apps",
+        "openhands"
+      ]
+    },
+    {
+      "tag": "curated-list",
+      "count": 4,
+      "description": "Lists with active curation and quality standards",
+      "list_ids": [
+        "awesome",
+        "awesome-awesome-awesome",
+        "awesome-awesomeness",
+        "lists"
+      ]
+    },
+    {
+      "tag": "data-science",
+      "count": 4,
+      "description": "Data science resources",
+      "list_ids": [
+        "awesome-data-science-viz",
+        "awesome-datascience",
+        "awesome-python-data-science",
+        "datascience-python"
+      ]
+    },
+    {
+      "tag": "directory",
+      "count": 4,
+      "description": "Directory-style resource collections",
+      "list_ids": [
+        "ai-collection",
+        "awesome-ai-gpts",
+        "awesome-ai-tools",
+        "best-gpts"
+      ]
+    },
+    {
+      "tag": "education",
+      "count": 4,
+      "description": "Educational content and curricula",
+      "list_ids": [
+        "ai-for-beginners",
+        "free-programming-books",
+        "learn-prompting",
+        "llms-from-scratch"
+      ]
+    },
+    {
+      "tag": "javascript",
+      "count": 4,
+      "description": "JavaScript ecosystem resources",
+      "list_ids": [
+        "awesome-chartjs",
+        "awesome-d3",
+        "awesome-javascript",
+        "awesome-nodejs"
+      ]
+    },
+    {
+      "tag": "open-data",
+      "count": 4,
+      "description": "Open data resources",
+      "list_ids": [
+        "awesome-data",
+        "awesome-json-datasets",
+        "awesome-public-datasets",
+        "awesome-public-datasets-caesar"
+      ]
+    },
+    {
+      "tag": "prompt-engineering",
+      "count": 4,
+      "description": "Prompt engineering techniques and guides",
+      "list_ids": [
+        "awesome-prompt-engineering",
+        "learn-prompting",
+        "prompt-engineering-guide",
+        "prompt-engineering-notebooks"
+      ]
+    },
+    {
+      "tag": "python",
+      "count": 4,
+      "description": "Python ecosystem resources",
+      "list_ids": [
+        "awesome-data-science-viz",
+        "awesome-python",
+        "awesome-python-data-science",
+        "datascience-python"
+      ]
+    },
+    {
+      "tag": "rag",
+      "count": 4,
+      "description": "Retrieval-augmented generation resources",
+      "list_ids": [
+        "awesome-llm-apps",
+        "dify",
+        "langchain",
+        "ragflow"
+      ]
+    },
+    {
+      "tag": "resources",
+      "count": 4,
+      "description": "General resource collections",
+      "list_ids": [
+        "awesome-data-visualization-alpers",
+        "awesome-datascience",
+        "best-websites-programmer",
+        "lists"
+      ]
+    },
+    {
+      "tag": "sql",
+      "count": 4,
+      "description": "SQL resources and tools",
+      "list_ids": [
+        "awesome-db",
+        "awesome-dbt",
+        "awesome-mysql",
+        "awesome-postgres"
+      ]
+    },
+    {
+      "tag": "agents",
+      "count": 3,
+      "description": "AI agent tools",
+      "list_ids": [
+        "awesome-copilot",
+        "dify",
+        "langchain"
+      ]
+    },
+    {
+      "tag": "ai-coding",
+      "count": 3,
+      "description": "AI coding tools and assistants",
+      "list_ids": [
+        "awesome-ai-coding-tools",
+        "awesome-code-ai",
+        "awesome-copilot"
+      ]
+    },
+    {
+      "tag": "ai-tools",
+      "count": 3,
+      "description": "AI-powered tools and applications",
+      "list_ids": [
+        "ai-collection",
+        "awesome-ai-gpts",
+        "awesome-ai-tools"
+      ]
+    },
+    {
+      "tag": "beginners",
+      "count": 3,
+      "description": "Beginner-friendly resources",
+      "list_ids": [
+        "ai-agents-for-beginners",
+        "ai-for-beginners",
+        "generative-ai-for-beginners"
+      ]
+    },
+    {
+      "tag": "big-data",
+      "count": 3,
+      "description": "Big data tools and frameworks",
+      "list_ids": [
+        "awesome-bigdata",
+        "awesome-flink",
+        "awesome-spark"
+      ]
+    },
+    {
+      "tag": "curriculum",
+      "count": 3,
+      "description": "Structured learning curricula",
+      "list_ids": [
+        "ai-agents-for-beginners",
+        "ai-for-beginners",
+        "generative-ai-for-beginners"
+      ]
+    },
+    {
+      "tag": "data-engineering",
+      "count": 3,
+      "description": "Data engineering tools and practices",
+      "list_ids": [
+        "awesome-data-engineering",
+        "awesome-opensource-data-engineering",
+        "data-engineer-roadmap"
+      ]
+    },
+    {
+      "tag": "developer-tools",
+      "count": 3,
+      "description": "Developer productivity tools",
+      "list_ids": [
+        "awesome-ai-coding-tools",
+        "awesome-code-ai",
+        "awesome-vscode"
+      ]
+    },
+    {
+      "tag": "devops",
+      "count": 3,
+      "description": "DevOps tools, practices, and resources",
+      "list_ids": [
+        "awesome-docker",
+        "awesome-kubernetes",
+        "the-book-of-secret-knowledge"
+      ]
+    },
+    {
+      "tag": "gpt",
+      "count": 3,
+      "description": "GPT model ecosystem resources",
+      "list_ids": [
+        "awesome-chatgpt-prompts",
+        "awesome-chatgpt-sindresorhus",
+        "awesome-gpt"
+      ]
+    },
+    {
+      "tag": "index",
+      "count": 3,
+      "description": "Index and directory-style collections",
+      "list_ids": [
+        "awesome",
+        "awesome-awesome-awesome",
+        "lists"
+      ]
+    },
+    {
+      "tag": "microsoft",
+      "count": 3,
+      "description": "Microsoft-maintained resources",
+      "list_ids": [
+        "ai-agents-for-beginners",
+        "ai-for-beginners",
+        "generative-ai-for-beginners"
+      ]
+    },
+    {
+      "tag": "workflow",
+      "count": 3,
+      "description": "Workflow automation tools",
+      "list_ids": [
+        "awesome-workflow-engines",
+        "dify",
+        "n8n"
+      ]
+    },
+    {
+      "tag": "academic",
+      "count": 2,
+      "description": "Academic resources",
+      "list_ids": [
+        "awesome-visualization-research",
+        "awesome-visualization-tasks"
+      ]
+    },
+    {
+      "tag": "ai",
+      "count": 2,
+      "description": "Artificial intelligence resources",
+      "list_ids": [
+        "ai-for-beginners",
+        "awesome-chatgpt-prompts"
+      ]
+    },
+    {
+      "tag": "architecture",
+      "count": 2,
+      "description": "Software architecture resources",
+      "list_ids": [
+        "awesome-scalability",
+        "system-design-primer"
+      ]
+    },
+    {
+      "tag": "automation",
+      "count": 2,
+      "description": "Automation tools",
+      "list_ids": [
+        "n8n",
+        "openhands"
+      ]
+    },
+    {
+      "tag": "career",
+      "count": 2,
+      "description": "Career development resources",
+      "list_ids": [
+        "data-engineer-roadmap",
+        "developer-roadmap"
+      ]
+    },
+    {
+      "tag": "charts",
+      "count": 2,
+      "description": "Charting libraries and tools",
+      "list_ids": [
+        "awesome-chartjs",
+        "awesome-dataviz"
+      ]
+    },
+    {
+      "tag": "cli",
+      "count": 2,
+      "description": "Command-line tools",
+      "list_ids": [
+        "gemini-cli",
+        "ollama"
+      ]
+    },
+    {
+      "tag": "d3",
+      "count": 2,
+      "description": "D3.js visualization resources",
+      "list_ids": [
+        "awesome-data-science-viz",
+        "awesome-dataviz"
+      ]
+    },
+    {
+      "tag": "data-visualization",
+      "count": 2,
+      "description": "Data visualization tools and libraries",
+      "list_ids": [
+        "awesome-dataviz",
+        "awesome-dataviz-hal9"
+      ]
+    },
+    {
+      "tag": "distributed-systems",
+      "count": 2,
+      "description": "Distributed systems resources",
+      "list_ids": [
+        "awesome-scalability",
+        "system-design-primer"
+      ]
+    },
+    {
+      "tag": "etl",
+      "count": 2,
+      "description": "ETL frameworks and tools",
+      "list_ids": [
+        "awesome-data-engineering",
+        "awesome-etl"
+      ]
+    },
+    {
+      "tag": "flink",
+      "count": 2,
+      "description": "Apache Flink resources",
+      "list_ids": [
+        "awesome-flink",
+        "awesome-streaming"
+      ]
+    },
+    {
+      "tag": "framework",
+      "count": 2,
+      "description": "Software frameworks",
+      "list_ids": [
+        "awesome-langchain",
+        "langchain"
+      ]
+    },
+    {
+      "tag": "from-scratch",
+      "count": 2,
+      "description": "Build-from-scratch tutorials",
+      "list_ids": [
+        "build-your-own-x",
+        "llms-from-scratch"
+      ]
+    },
+    {
+      "tag": "gpts",
+      "count": 2,
+      "description": "Custom GPTs and GPT store",
+      "list_ids": [
+        "awesome-ai-gpts",
+        "best-gpts"
+      ]
+    },
+    {
+      "tag": "hands-on",
+      "count": 2,
+      "description": "Hands-on practical resources",
+      "list_ids": [
+        "project-based-learning",
+        "prompt-engineering-notebooks"
+      ]
+    },
+    {
+      "tag": "infrastructure",
+      "count": 2,
+      "description": "Infrastructure tools",
+      "list_ids": [
+        "awesome-docker",
+        "awesome-opensource-data-engineering"
+      ]
+    },
+    {
+      "tag": "langchain",
+      "count": 2,
+      "description": "LangChain framework ecosystem",
+      "list_ids": [
+        "awesome-langchain",
+        "langchain"
+      ]
+    },
+    {
+      "tag": "llm-agents",
+      "count": 2,
+      "description": "LLM-powered agent resources",
+      "list_ids": [
+        "awesome-llm-agents",
+        "awesome-llm-powered-agent"
+      ]
+    },
+    {
+      "tag": "nlp",
+      "count": 2,
+      "description": "Natural language processing resources",
+      "list_ids": [
+        "awesome-llm",
+        "awesome-prompt-engineering"
+      ]
+    },
+    {
+      "tag": "nosql",
+      "count": 2,
+      "description": "NoSQL database resources",
+      "list_ids": [
+        "awesome-db",
+        "awesome-mongodb"
+      ]
+    },
+    {
+      "tag": "open-source",
+      "count": 2,
+      "description": "Open source projects",
+      "list_ids": [
+        "awesome-opensource-data-engineering",
+        "openhands"
+      ]
+    },
+    {
+      "tag": "orchestration",
+      "count": 2,
+      "description": "Orchestration and scheduling tools",
+      "list_ids": [
+        "awesome-workflow-engines",
+        "crewai"
+      ]
+    },
+    {
+      "tag": "pipelines",
+      "count": 2,
+      "description": "Data pipeline resources",
+      "list_ids": [
+        "awesome-data-engineering",
+        "awesome-workflow-engines"
+      ]
+    },
+    {
+      "tag": "productivity",
+      "count": 2,
+      "description": "Productivity tools",
+      "list_ids": [
+        "awesome-ai-coding-tools",
+        "awesome-ai-tools"
+      ]
+    },
+    {
+      "tag": "programming",
+      "count": 2,
+      "description": "General programming resources",
+      "list_ids": [
+        "best-websites-programmer",
+        "free-programming-books"
+      ]
+    },
+    {
+      "tag": "projects",
+      "count": 2,
+      "description": "Project collections",
+      "list_ids": [
+        "build-your-own-x",
+        "project-based-learning"
+      ]
+    },
+    {
+      "tag": "public-data",
+      "count": 2,
+      "description": "Public data sources",
+      "list_ids": [
+        "awesome-public-datasets",
+        "awesome-public-datasets-caesar"
+      ]
+    },
+    {
+      "tag": "real-time",
+      "count": 2,
+      "description": "Real-time processing tools",
+      "list_ids": [
+        "awesome-flink",
+        "awesome-streaming"
+      ]
+    },
+    {
+      "tag": "roadmap",
+      "count": 2,
+      "description": "Career and learning roadmaps",
+      "list_ids": [
+        "data-engineer-roadmap",
+        "developer-roadmap"
+      ]
+    },
+    {
+      "tag": "security",
+      "count": 2,
+      "description": "Security tools and resources",
+      "list_ids": [
+        "awesome-gpt-agents",
+        "the-book-of-secret-knowledge"
+      ]
+    },
+    {
+      "tag": "spark",
+      "count": 2,
+      "description": "Apache Spark resources",
+      "list_ids": [
+        "awesome-bigdata",
+        "awesome-spark"
+      ]
+    },
+    {
+      "tag": "system-design",
+      "count": 2,
+      "description": "System design resources",
+      "list_ids": [
+        "awesome-scalability",
+        "system-design-primer"
+      ]
+    },
+    {
+      "tag": "web",
+      "count": 2,
+      "description": "Web development resources",
+      "list_ids": [
+        "awesome-dataviz-javierluraschi",
+        "awesome-javascript"
+      ]
+    }
+  ]
+}

@@ -26,7 +26,28 @@ Data is available in both **JSON** and **CSV** formats for easy integration into
 | Categories | 9 |
 | Unique maintainers | 95 |
 | Data formats | JSON, CSV |
-| Last updated | 2026-04-05 |
+| Last updated | 2026-04-06 |
+
+---
+
+## Top Lists by Stars
+
+The 10 highest-starred lists in the collection, with live GitHub stats:
+
+| List | Stars | Forks | Last Commit | Category |
+|------|------:|------:|-------------|----------|
+| [Build Your Own X](https://github.com/codecrafters-io/build-your-own-x) | 486,434 | 45,766 | 2026-02-21 | Developer Tools & Coding |
+| [Awesome](https://github.com/sindresorhus/awesome) | 452,285 | 33,981 | 2026-04-02 | Meta Lists |
+| [Free Programming Books](https://github.com/EbookFoundation/free-programming-books) | 385,053 | 66,086 | 2026-03-31 | AI & Machine Learning |
+| [Developer Roadmap](https://github.com/kamranahmedse/developer-roadmap) | 352,278 | 43,867 | 2026-04-03 | Developer Tools & Coding |
+| [System Design Primer](https://github.com/donnemartin/system-design-primer) | 341,522 | 55,217 | 2026-03-20 | Developer Tools & Coding |
+| [Awesome Python](https://github.com/vinta/awesome-python) | 290,868 | 27,585 | 2026-04-04 | Developer Tools & Coding |
+| [Project Based Learning](https://github.com/practical-tutorials/project-based-learning) | 262,427 | 34,127 | 2024-08-15 | Developer Tools & Coding |
+| [The Book of Secret Knowledge](https://github.com/trimstray/the-book-of-secret-knowledge) | 213,530 | 12,769 | 2024-11-19 | Meta Lists |
+| [n8n](https://github.com/n8n-io/n8n) | 182,607 | 56,507 | 2026-04-06 | Coding Agents & AI Dev Tools |
+| [Awesome Go](https://github.com/avelino/awesome-go) | 169,169 | 13,111 | 2026-04-05 | Developer Tools & Coding |
+
+> See the full [HIGHLIGHTS.md](HIGHLIGHTS.md) for the top 20 must-know lists with detailed commentary.
 
 ---
 
@@ -244,6 +265,23 @@ Each entry in [`data/lists.json`](data/lists.json) follows this schema:
 | `editorial_notes` | string | Editorial commentary on quality and scope |
 | `related_lists` | string[] | IDs of related lists in this collection |
 | `added_date` | string | Date added to ListVerse |
+| `stars_count` | integer | Live GitHub star count (auto-refreshed monthly) |
+| `forks_count` | integer | Live GitHub fork count |
+| `last_commit_date` | string | Date of last push (YYYY-MM-DD) |
+| `open_issues_count` | integer | Number of open issues |
+| `is_archived` | boolean | Whether the repo is archived |
+| `created_year` | integer | Year the repo was created |
+| `watchers_count` | integer | Number of watchers |
+| `list_type` | string | Content type: tools, papers, tutorials, datasets, libraries, frameworks, projects, mixed |
+| `audience_level` | string | Target audience: beginner, intermediate, advanced, all |
+| `quality_score` | integer | Composite quality score (0-10) based on stars, activity, entry count, curation |
+| `use_cases` | string[] | 2-4 phrases describing why someone would use this list |
+| `has_website` | boolean | Whether the list has a companion website |
+| `website_url` | string\|null | URL of companion website, if any |
+| `is_awesome_verified` | boolean | Listed on the official sindresorhus/awesome index |
+| `language_focus` | string\|null | Primary programming language, if language-specific |
+| `overlaps_with` | string[] | IDs of entries with significant content overlap |
+| `best_sections` | string[] | 2-3 standout sections within the list |
 
 ---
 
@@ -291,6 +329,32 @@ import pandas as pd
 df = pd.read_csv("data/lists.csv")
 print(df.groupby("category").size().sort_values(ascending=False))
 ```
+
+---
+
+## Live Stats
+
+GitHub statistics (stars, forks, last commit date, open issues, archive status, watchers) are refreshed automatically on the first day of every month via a [GitHub Actions workflow](.github/workflows/refresh.yml).
+
+You can also refresh stats manually:
+
+```bash
+python scripts/refresh_stats.py
+```
+
+The refresh script updates `data/lists.json` and regenerates `data/lists.csv`. See [`scripts/refresh_stats.py`](scripts/refresh_stats.py) for details.
+
+---
+
+## Highlights
+
+Check out [HIGHLIGHTS.md](HIGHLIGHTS.md) for the **top 20 must-know lists** from the collection, with detailed commentary on why each one is essential.
+
+---
+
+## Tag Taxonomy
+
+The [`data/tags.json`](data/tags.json) file provides a tag taxonomy across all 100 entries, listing every tag that appears 2+ times with counts and associated list IDs.
 
 ---
 
