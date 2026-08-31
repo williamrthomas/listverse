@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ListVerse — curated awesome-lists</title>
+    <meta
+      name="description"
+      content="A public directory of curated awesome-list repositories on GitHub, searchable by name and filterable by category."
+    />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#catalog">Skip to lists</a>
+    <header class="masthead">
+      <div class="masthead-inner">
+        <p class="eyebrow">A meta-directory</p>
+        <h1>ListVerse</h1>
+        <p class="lede">
+          A curated catalog of the best
+          <em>awesome-list</em> repositories on GitHub — with editorial notes,
+          categories, and tags.
+        </p>
+        <p class="stats" id="stats" aria-live="polite">Loading catalog…</p>
+      </div>
+    </header>
+
+    <main id="catalog" class="catalog">
+      <form class="controls" role="search" aria-label="Filter the directory">
+        <label class="search-label" for="q">Search</label>
+        <input
+          id="q"
+          name="q"
+          type="search"
+          autocomplete="off"
+          placeholder="Search names, descriptions, notes, tags…"
+        />
+        <fieldset class="categories">
+          <legend>Category</legend>
+          <div id="category-filters" class="chips"></div>
+        </fieldset>
+      </form>
+
+      <p class="result-meta" id="result-meta" aria-live="polite"></p>
+      <div id="error" class="error" hidden></div>
+      <ul id="results" class="results"></ul>
+    </main>
+
+    <footer class="colophon">
+      <p>
+        Data from
+        <a href="https://github.com/williamrthomas/listverse">williamrthomas/listverse</a>.
+        Licensed
+        <a href="https://github.com/williamrthomas/listverse/blob/main/LICENSE">CC BY 4.0</a>.
+      </p>
+    </footer>
+    <script src="/app.js" type="module"></script>
+  </body>
+</html>

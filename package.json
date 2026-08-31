@@ -1,0 +1,13 @@
+{
+  "name": "listverse",
+  "private": true,
+  "description": "Curated directory of awesome-list repositories, served as a Cloudflare Worker static site.",
+  "scripts": {
+    "build": "node scripts/build_site.mjs",
+    "preview": "node scripts/build_site.mjs && wrangler dev",
+    "deploy": "node scripts/build_site.mjs && wrangler deploy"
+  },
+  "devDependencies": {
+    "wrangler": "^4.34.0"
+  }
+}

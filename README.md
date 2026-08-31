@@ -16,6 +16,8 @@ The focus areas are **Data, AI/ML, AI Agents, Data Visualization, Data Engineeri
 
 Data is available in both **JSON** and **CSV** formats for easy integration into tools, scripts, and dashboards.
 
+A public directory website is generated from [`data/lists.json`](data/lists.json). Preview it locally with the commands below; deploy it to Cloudflare Workers (a `*.workers.dev` URL is enough until a custom domain is attached).
+
 ---
 
 ## Stats
@@ -395,6 +397,55 @@ Each entry in [`data/lists.json`](data/lists.json) follows this schema:
 | `getting_started` | string | 1-2 sentence guide on how to best navigate the list |
 | `suggested_projects` | string[] | 2-3 concrete project ideas using the list's resources |
 | `featured_example` | object\|null | Standout entry from the list with name, url, and why |
+
+---
+
+## Website
+
+The directory is a small static site: HTML/CSS/JS in [`site/`](site/), plus a copy of `data/lists.json` assembled into `dist/` at build time. Search covers names, descriptions, editorial notes, and tags. Category chips filter the catalog. There is no CMS.
+
+### Preview locally
+
+Python only (no Node required):
+
+```bash
+python3 scripts/build_site.py
+python3 -m http.server --directory dist 8787
+```
+
+Open [http://localhost:8787](http://localhost:8787).
+
+Cloudflare’s local runtime (closest to production):
+
+```bash
+npm install
+npm run preview
+```
+
+That copies the catalog into `dist/`, then runs `wrangler dev` (defaults to [http://localhost:8787](http://localhost:8787)).
+
+### Deploy to Cloudflare
+
+Config lives in [`wrangler.jsonc`](wrangler.jsonc): a Workers **static assets** project named `listverse`, with `assets.directory` pointing at `./dist`. No Worker script is required.
+
+From this repo, with [Wrangler](https://developers.cloudflare.com/workers/wrangler/) logged in (`npx wrangler login`):
+
+```bash
+npm install
+npm run deploy
+```
+
+`npm run deploy` builds `dist/` and runs `wrangler deploy`. The first deploy is available on a `*.workers.dev` subdomain. Attach a custom domain later in the Cloudflare dashboard.
+
+**Git-connected Workers Builds:** create a Worker from this repository in the Cloudflare dashboard. Suggested settings:
+
+| Setting | Value |
+|---------|--------|
+| Build command | `npm run build` (or `node scripts/build_site.mjs`) |
+| Deploy command | `npx wrangler deploy` |
+| Root directory | repository root |
+
+Wrangler also runs `node scripts/build_site.mjs` via `build.command` in `wrangler.jsonc` before upload. If this environment cannot finish a live deploy (missing Cloudflare account auth), the config above is still enough to publish from a machine that is logged in.
 
 ---
 
