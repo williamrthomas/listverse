@@ -17,6 +17,10 @@ __pycache__/
 # Node
 node_modules/
 
+# Cloudflare / site build
+dist/
+.wrangler/
+
 # Temp files
 *.tmp
 *.bak

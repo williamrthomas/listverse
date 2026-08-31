@@ -108,6 +108,8 @@
 
 **Goal**: Build a searchable, filterable web directory.
 
+**Status**: MVP shipped — static directory generated from `data/lists.json`, with client-side search and category filters, hosted on Cloudflare Workers (static assets). Remaining Phase 5 items (per-list pages, graph, extra sort/filter dimensions) are still optional.
+
 ### Features
 - Full-text search across names, descriptions, and editorial notes
 - Filter by category, subcategory, stars, activity level
@@ -116,9 +118,9 @@
 - Responsive design for mobile browsing
 
 ### Technical Stack
-- Static site generated from JSON data
-- GitHub Pages hosting (zero cost)
-- Client-side search (Lunr.js or Fuse.js)
+- Static site generated from JSON data (`site/` + `scripts/build_site.py`)
+- Cloudflare Workers static assets (not GitHub Pages)
+- Client-side search over the JSON catalog (no CMS)
 - Minimal JavaScript, fast loading
 
 ### Pages
@@ -138,4 +140,4 @@
 | Phase 2 | 200 lists, new categories | Planned |
 | Phase 3 | Relationship graph | Planned |
 | Phase 4 | Automation pipeline | Planned |
-| Phase 5 | Web interface | Planned |
+| Phase 5 | Web interface | MVP (search + category filter) |

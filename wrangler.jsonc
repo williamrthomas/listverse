@@ -1,0 +1,17 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "listverse",
+  // Static directory site — no Worker script.
+  "compatibility_date": "2026-08-31",
+  "assets": {
+    "directory": "./dist",
+    "not_found_handling": "404-page"
+  },
+  "build": {
+    "command": "node scripts/build_site.mjs"
+  },
+  "observability": {
+    "enabled": true
+  },
+  "preview_urls": true
+}
