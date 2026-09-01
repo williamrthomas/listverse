@@ -23,7 +23,7 @@ import os
 import subprocess
 import sys
 import time
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 
 SCRIPT_DIR = Path(__file__).resolve().parent
@@ -178,6 +178,14 @@ def main():
         json.dump(data, f, indent=2)
         f.write("\n")
     print(f"\nUpdated {LISTS_JSON}")
+
+    meta_path = REPO_ROOT / "data" / "catalog_meta.json"
+    generated_at = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    meta_path.write_text(
+        json.dumps({"generated_at": generated_at}, indent=2) + "\n",
+        encoding="utf-8",
+    )
+    print(f"Stamped generated_at {generated_at} in {meta_path}")
 
     # Regenerate CSV
     regenerate_csv(data)

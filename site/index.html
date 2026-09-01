@@ -36,13 +36,22 @@
           autocomplete="off"
           placeholder="Search names, descriptions, notes, tags…"
         />
+        <div
+          id="active-filters"
+          class="active-filters"
+          hidden
+          aria-label="Active filters"
+        ></div>
         <fieldset class="categories">
           <legend>Category</legend>
           <div id="category-filters" class="chips"></div>
         </fieldset>
       </form>
 
-      <p class="result-meta" id="result-meta" aria-live="polite"></p>
+      <div class="result-bar">
+        <p class="result-meta" id="result-meta" aria-live="polite"></p>
+        <div id="sort" class="sort" role="group" aria-label="Sort lists"></div>
+      </div>
       <div id="error" class="error" hidden></div>
       <ul id="results" class="results"></ul>
     </main>
@@ -53,7 +62,21 @@
         <a href="https://github.com/williamrthomas/listverse">williamrthomas/listverse</a>.
         Licensed
         <a href="https://github.com/williamrthomas/listverse/blob/main/LICENSE">CC BY 4.0</a>.
+        <a href="#about">About</a>
       </p>
+      <div id="about" class="about">
+        <p>
+          <strong>About.</strong>
+          ListVerse is a hand-curated index of GitHub awesome-lists, focused on
+          data, AI/ML, agents, visualization, and developer tools.
+        </p>
+        <p id="as-of" hidden></p>
+        <p>
+          <a href="https://github.com/williamrthomas/listverse/issues/new"
+            >Suggest a list</a
+          >
+        </p>
+      </div>
     </footer>
     <script src="/app.js" type="module"></script>
   </body>
