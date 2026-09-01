@@ -126,7 +126,7 @@
 ### Pages
 - Home: Editorial front door — 20 must-know lists from HIGHLIGHTS.md
 - Browse: Filterable catalog of all entries (default: recently pushed)
-- Interiors live on those pages from existing JSON fields (no `/list/:id` routes)
+- Interiors at `/lists/{id}/` from existing JSON fields (no CMS; GitHub is a citation, not a title button)
 - Graph: Interactive relationship visualization (not built)
 - About: Methodology, contribution guide, changelog (not built)
 

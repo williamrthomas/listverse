@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ListVerse</title>
+    <meta name="description" content="A curated awesome-list in the ListVerse catalog." />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body data-page="list">
+    <a class="skip-link" href="#object">Skip to list</a>
+    <header class="masthead">
+      <div class="masthead-inner">
+        <p class="eyebrow">A meta-directory</p>
+        <h1>ListVerse</h1>
+        <p class="lede">
+          A curated catalog of the best
+          <em>awesome-list</em> repositories on GitHub — with editorial notes,
+          categories, and tags.
+        </p>
+        <p class="stats" id="stats" aria-live="polite">Loading catalog…</p>
+      </div>
+    </header>
+
+    <main id="object" class="catalog">
+      <p class="catalog-link">
+        <a href="/">Essential lists</a>
+        ·
+        <a href="/browse.html">Browse the full catalog</a>
+      </p>
+      <div id="error" class="error" hidden></div>
+      <article id="list-root" class="list-object"></article>
+    </main>
+
+    <footer class="colophon">
+      <p>
+        Stars refreshed monthly. Data from
+        <a href="https://github.com/williamrthomas/listverse">williamrthomas/listverse</a>.
+        Licensed
+        <a href="https://github.com/williamrthomas/listverse/blob/main/LICENSE">CC BY 4.0</a>.
+      </p>
+    </footer>
+    <script src="/app.js" type="module"></script>
+  </body>
+</html>

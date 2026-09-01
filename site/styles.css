@@ -424,13 +424,81 @@ h1 {
   padding: 0;
 }
 
-.sorts legend {
+.staff-queries {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem 0.9rem;
+  margin: 0;
+  font-size: 0.88rem;
+}
+
+.staff-queries a {
+  color: var(--muted);
+}
+
+.staff-queries a:hover {
+  color: var(--accent);
+}
+
+.list-object {
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  padding: 1.1rem 1.15rem 1rem;
+  box-shadow: var(--shadow);
+}
+
+.list-object > .card-top h2 {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: 1.35rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.trail {
+  list-style: none;
+  margin: 1rem 0 0;
+  padding: 0.75rem 0 0;
+  border-top: 1px dashed var(--rule);
+}
+
+.cousins {
+  margin: 1.1rem 0 0;
+  padding-top: 0.75rem;
+  border-top: 1px dashed var(--rule);
+}
+
+.cousins h3 {
+  margin: 0 0 0.35rem;
   font-size: 0.78rem;
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--muted);
-  margin-bottom: 0.55rem;
+}
+
+.cousins ul {
+  margin: 0;
+  padding-left: 1.15rem;
+}
+
+.citation {
+  margin: 1.25rem 0 0;
+  padding-top: 0.85rem;
+  border-top: 1px solid var(--rule);
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
+.citation p {
+  margin: 0.15rem 0 0;
+}
+
+.catalog-id {
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  color: var(--muted);
 }
 
 @media (min-width: 860px) {

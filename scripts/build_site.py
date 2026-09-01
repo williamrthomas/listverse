@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+import json
 import shutil
 from pathlib import Path
 
@@ -29,7 +30,27 @@ def main() -> None:
     data_dir.mkdir(exist_ok=True)
     shutil.copy2(LISTS, data_dir / "lists.json")
     shutil.copy2(HIGHLIGHTS, DIST / "HIGHLIGHTS.md")
-    print(f"Built {DIST} ({LISTS.stat().st_size} bytes of catalog data)")
+
+    catalog = json.loads(LISTS.read_text())
+    if not isinstance(catalog, list):
+        raise SystemExit("Catalog data is not a list")
+    template = (SITE / "list.html").read_text()
+    lists_dir = DIST / "lists"
+    lists_dir.mkdir(exist_ok=True)
+    for entry in catalog:
+        list_id = entry.get("id")
+        if not list_id:
+            continue
+        dest = lists_dir / str(list_id)
+        dest.mkdir(exist_ok=True)
+        (dest / "index.html").write_text(template)
+    template_copy = DIST / "list.html"
+    if template_copy.exists():
+        template_copy.unlink()
+
+    print(
+        f"Built {DIST} ({LISTS.stat().st_size} bytes of catalog data, {len(catalog)} interiors)"
+    )
 
 
 if __name__ == "__main__":

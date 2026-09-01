@@ -135,24 +135,43 @@ function renderSorts() {
   ).join("");
 }
 
+function listHref(list) {
+  return list?.id ? `/lists/${encodeURIComponent(list.id)}/` : "";
+}
+
+function repoPath(githubUrl) {
+  const match = String(githubUrl || "").match(/github\.com\/([^/]+\/[^/]+)/i);
+  return match ? match[1].replace(/\/+$/, "") : "";
+}
+
+function inboundRelated(lists, id) {
+  return lists.filter((list) => (list.related_lists || []).includes(id) && list.id !== id);
+}
+
+function featuredExampleHtml(list) {
+  if (!hasFeaturedExample(list)) return "";
+  const example = list.featured_example;
+  const label = example.name || example.url;
+  const linked = example.url
+    ? `<a href="${escapeAttr(example.url)}" rel="noopener noreferrer">${escapeHtml(label)}</a>`
+    : escapeHtml(label);
+  const why = example.why ? ` — ${escapeHtml(example.why)}` : "";
+  return `${linked}${why}`;
+}
+
 function interiorsHtml(list) {
   const blocks = [];
-  if (hasFeaturedExample(list)) {
-    const example = list.featured_example;
-    const label = example.name || example.url;
-    const linked = example.url
-      ? `<a href="${escapeAttr(example.url)}" rel="noopener noreferrer">${escapeHtml(label)}</a>`
-      : escapeHtml(label);
-    const why = example.why ? ` — ${escapeHtml(example.why)}` : "";
-    blocks.push(
-      `<div class="interior-block"><h3>Featured example</h3><p>${linked}${why}</p></div>`
-    );
-  }
   if (list.getting_started) {
     blocks.push(
-      `<div class="interior-block"><h3>Getting started</h3><p>${escapeHtml(
+      `<div class="interior-block"><h3>Start here</h3><p>${escapeHtml(
         list.getting_started
       )}</p></div>`
+    );
+  }
+  const featured = featuredExampleHtml(list);
+  if (featured) {
+    blocks.push(
+      `<div class="interior-block"><h3>A featured entry</h3><p>${featured}</p></div>`
     );
   }
   if (Array.isArray(list.best_sections) && list.best_sections.length) {
@@ -175,6 +194,118 @@ function interiorsHtml(list) {
     );
   }
   return blocks.join("");
+}
+
+function trailHtml(list) {
+  const steps = [];
+  if (list.getting_started) {
+    steps.push({
+      title: "Start here",
+      body: `<p>${escapeHtml(list.getting_started)}</p>`,
+    });
+  }
+  const featured = featuredExampleHtml(list);
+  if (featured) {
+    steps.push({
+      title: "A featured entry",
+      body: `<p>${featured}</p>`,
+    });
+  }
+  if (Array.isArray(list.best_sections) && list.best_sections.length) {
+    const items = list.best_sections.map((section) => `<li>${escapeHtml(section)}</li>`).join("");
+    steps.push({
+      title: "Best sections",
+      body: `<ul class="sections">${items}</ul>`,
+    });
+  }
+  if (!steps.length) return "";
+  return `<ol class="trail">${steps
+    .map(
+      (step, index) =>
+        `<li class="interior-block"><h3>${index + 1}. ${escapeHtml(step.title)}</h3>${step.body}</li>`
+    )
+    .join("")}</ol>`;
+}
+
+function cousinLinks(lists, ids) {
+  const byId = new Map(lists.map((list) => [list.id, list]));
+  const items = [];
+  for (const id of ids) {
+    const list = byId.get(id);
+    if (!list) continue;
+    items.push(
+      `<li><a href="${escapeAttr(listHref(list))}">${escapeHtml(list.name)}</a></li>`
+    );
+  }
+  return items;
+}
+
+function objectHtml(list, lists) {
+  const stars = formatStars(list.stars_count);
+  const subcategory = list.subcategory ? `<span>${escapeHtml(list.subcategory)}</span>` : "";
+  const meta = `<div class="meta">
+      <span class="category-label">${escapeHtml(list.category || "")}</span>
+      ${subcategory}
+    </div>`;
+  const trail = trailHtml(list);
+  const essay = [];
+  if (list.editorial_notes) {
+    essay.push(
+      `<div class="interior-block"><h3>Editorial note</h3><p>${escapeHtml(
+        list.editorial_notes
+      )}</p></div>`
+    );
+  }
+  if (Array.isArray(list.suggested_projects) && list.suggested_projects.length) {
+    const items = list.suggested_projects
+      .map((project) => `<li>${escapeHtml(project)}</li>`)
+      .join("");
+    essay.push(
+      `<div class="interior-block"><h3>Suggested projects</h3><ul class="projects">${items}</ul></div>`
+    );
+  }
+
+  const also = cousinLinks(lists, list.related_lists || []);
+  const shownIn = cousinLinks(
+    lists,
+    inboundRelated(lists, list.id).map((other) => other.id)
+  );
+  const cousins = [
+    also.length
+      ? `<section class="cousins"><h3>Also in the catalog</h3><ul>${also.join("")}</ul></section>`
+      : "",
+    shownIn.length
+      ? `<section class="cousins"><h3>Shows up in</h3><ul>${shownIn.join("")}</ul></section>`
+      : "",
+  ]
+    .filter(Boolean)
+    .join("");
+
+  const repo = repoPath(list.github_url);
+  const pushed = formatCommitDate(list.last_commit_date);
+  const citation = `<footer class="citation">
+    <p class="catalog-id">${escapeHtml(list.id)}</p>
+    ${repo ? `<p>${escapeHtml(repo)}</p>` : ""}
+    ${list.maintainer ? `<p>@${escapeHtml(list.maintainer)}</p>` : ""}
+    ${list.license ? `<p>${escapeHtml(list.license)}</p>` : ""}
+    ${pushed ? `<p>Last pushed ${escapeHtml(pushed)}</p>` : ""}
+    ${
+      list.github_url
+        ? `<p><a href="${escapeAttr(list.github_url)}" rel="noopener noreferrer">On GitHub ↗</a></p>`
+        : ""
+    }
+  </footer>`;
+
+  return `<div class="card-top">
+      <h2>${escapeHtml(list.name)}</h2>
+      <span class="stars" title="GitHub stars">★ ${escapeHtml(stars)}</span>
+    </div>
+    ${meta}
+    <p class="description">${escapeHtml(list.description || "")}</p>
+    ${trail}
+    ${essay.join("")}
+    ${cousins}
+    ${citation}`;
 }
 
 function cardMeta(list) {
@@ -201,11 +332,12 @@ function highlightCardHtml(entry) {
     ? cardMeta(list)
     : { stars: "—", meta: "" };
   const interiors = list ? interiorsHtml(list) : "";
+  const href = list ? listHref(list) : url;
   return `<li class="card">
     <div class="card-top">
       <h2><span class="rank">${escapeHtml(String(entry.rank))}</span><a href="${escapeAttr(
-        url
-      )}" rel="noopener noreferrer">${escapeHtml(name)}</a></h2>
+        href
+      )}">${escapeHtml(name)}</a></h2>
       <span class="stars" title="GitHub stars">★ ${escapeHtml(stars)}</span>
     </div>
     ${meta}
@@ -229,9 +361,7 @@ function cardHtml(list) {
     : "";
   return `<li class="card">
     <div class="card-top">
-      <h2><a href="${escapeAttr(list.github_url)}" rel="noopener noreferrer">${escapeHtml(
-        list.name
-      )}</a></h2>
+      <h2><a href="${escapeAttr(listHref(list))}">${escapeHtml(list.name)}</a></h2>
       <span class="stars" title="GitHub stars">★ ${escapeHtml(stars)}</span>
     </div>
     ${meta}
@@ -360,10 +490,40 @@ async function initBrowse() {
   renderBrowse();
 }
 
+function listIdFromPath() {
+  const match = window.location.pathname.match(/\/lists\/([^/]+)\/?$/);
+  return match ? decodeURIComponent(match[1]) : "";
+}
+
+async function initList() {
+  const lists = await loadLists();
+  state.lists = lists;
+  const categories = uniqueCategories(lists).length;
+  els.stats.textContent = `${lists.length} lists · ${categories} categories`;
+
+  const root = document.getElementById("list-root");
+  const id = listIdFromPath();
+  const list = lists.find((item) => item.id === id);
+  if (!list) {
+    document.title = "Not found — ListVerse";
+    if (els.error) {
+      els.error.hidden = false;
+      els.error.textContent = "That list isn’t in the catalog.";
+    }
+    if (root) root.innerHTML = "";
+    return;
+  }
+
+  document.title = `${list.name} — ListVerse`;
+  if (root) root.innerHTML = objectHtml(list, lists);
+}
+
 async function init() {
   try {
     if (page === "browse") {
       await initBrowse();
+    } else if (page === "list") {
+      await initList();
     } else {
       await initFront();
     }

@@ -404,8 +404,9 @@ Each entry in [`data/lists.json`](data/lists.json) follows this schema:
 
 The public site is a static discovery index: HTML/CSS/JS in [`site/`](site/), plus a copy of `data/lists.json` and [`HIGHLIGHTS.md`](HIGHLIGHTS.md) assembled into `dist/` at build time. There is no CMS and no per-list routes.
 
-- **Front door** (`/`): the 20 must-know lists from `HIGHLIGHTS.md`, in editorial order (not ranked by `quality_score`). Each card links to GitHub and shows that list’s interiors from the JSON (`featured_example` when present, `getting_started`, `best_sections`, `suggested_projects`, `editorial_notes`).
-- **Browse** (`/browse.html`): the full catalog. Instant client-side search and category chips stay AND filters. Default sort is recently pushed (`last_commit_date`); optional sorts are Stars, Name, and Quality. Shareable `?q=`, `?category=`, and `?sort=` query params.
+- **Front door** (`/`): the 20 must-know lists from `HIGHLIGHTS.md`, in editorial order (not ranked by `quality_score`). Each card opens that list’s on-site interior. GitHub is a citation on the interior, not the card title.
+- **Browse** (`/browse.html`): the full catalog. Instant client-side search and category chips stay AND filters. Default sort is recently pushed (`last_commit_date`); optional sorts are Stars, Name, and Quality. Shareable `?q=`, `?category=`, and `?sort=` query params. Staff seed queries under search: `from-scratch`, `rag`, `osint`, `self-hosted`, `prompt-engineering`.
+- **Interiors** (`/lists/{id}/`): numbered trail from existing JSON fields (`getting_started`, `featured_example` when present, `best_sections`), plus related-list cousins. No CMS.
 
 Star counts on the site use live `stars_count` (never frozen `stars_approx`). Honesty copy is each list’s `last_commit_date` plus “stars refreshed monthly.”
 
