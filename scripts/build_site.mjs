@@ -37,6 +37,9 @@ function emitStatic(template, destDir, destFile) {
 const about = readFileSync(join(site, "about.html"), "utf8");
 emitStatic(about, join(dist, "about"), join(dist, "about.html"));
 
+const browse = readFileSync(join(site, "browse.html"), "utf8");
+emitStatic(browse, join(dist, "browse"), join(dist, "browse.html"));
+
 const journey = readFileSync(join(site, "journey.html"), "utf8");
 emitStatic(journey, join(dist, "journeys", "agents"), join(dist, "journeys", "agents.html"));
 emitStatic(journey, join(dist, "journeys", "learn"), join(dist, "journeys", "learn.html"));

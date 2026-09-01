@@ -12,7 +12,11 @@ const SORTS = [
   { id: "pushed", label: "Recently pushed" },
   { id: "stars", label: "Stars" },
   { id: "name", label: "Name" },
-  { id: "quality", label: "Quality" },
+  {
+    id: "quality",
+    label: "Quality",
+    title: "ListVerse composite of stars, activity, size, and curation — not a public grade.",
+  },
 ];
 
 const JOURNEYS = {
@@ -80,6 +84,11 @@ const state = {
   category: "",
   sort: "pushed",
 };
+
+function setStats(listCount, categoryCount) {
+  if (!els.stats) return;
+  els.stats.textContent = `${listCount} lists · ${categoryCount} categories`;
+}
 
 function uniqueCategories(lists) {
   const counts = new Map();
@@ -170,12 +179,12 @@ function renderChips() {
 
 function renderSorts() {
   if (!els.sorts) return;
-  els.sorts.innerHTML = SORTS.map(
-    (item) =>
-      `<button type="button" class="chip" data-sort="${escapeAttr(item.id)}" aria-pressed="${
-        state.sort === item.id
-      }">${escapeHtml(item.label)}</button>`
-  ).join("");
+  els.sorts.innerHTML = SORTS.map((item) => {
+    const title = item.title ? ` title="${escapeAttr(item.title)}"` : "";
+    return `<button type="button" class="chip" data-sort="${escapeAttr(item.id)}" aria-pressed="${
+      state.sort === item.id
+    }"${title}>${escapeHtml(item.label)}</button>`;
+  }).join("");
 }
 
 function listHref(list) {
@@ -395,13 +404,6 @@ function cardHtml(list) {
     .slice(0, 6)
     .map((tag) => `<li>${escapeHtml(tag)}</li>`)
     .join("");
-  const interiors = interiorsHtml(list);
-  const toggle = interiors
-    ? `<button type="button" class="toggle-notes" aria-expanded="false" data-id="${escapeAttr(
-        list.id
-      )}">List interior</button>
-       <div class="interiors" id="notes-${escapeAttr(list.id)}" hidden>${interiors}</div>`
-    : "";
   return `<li class="card">
     <div class="card-top">
       <h2><a href="${escapeAttr(listHref(list))}">${escapeHtml(list.name)}</a></h2>
@@ -410,12 +412,16 @@ function cardHtml(list) {
     ${meta}
     <p class="description">${escapeHtml(list.description || "")}</p>
     ${tags ? `<ul class="tags">${tags}</ul>` : ""}
-    ${toggle}
   </li>`;
 }
 
 function sortLabel(sort) {
   return SORTS.find((item) => item.id === sort)?.label || "Recently pushed";
+}
+
+function sortPhrase(sort) {
+  if (sort === "quality") return "quality (stars, activity, size, curation)";
+  return sortLabel(sort);
 }
 
 function renderBrowse() {
@@ -424,10 +430,10 @@ function renderBrowse() {
     .filter((list) => matches(list, query, state.category))
     .sort((a, b) => compareLists(a, b, state.sort));
 
-  const sortNote = `Sorted by ${sortLabel(state.sort)}`;
+  const sortNote = `Sorted by ${sortPhrase(state.sort)}`;
   els.meta.textContent =
     filtered.length === state.lists.length
-      ? `Showing all ${filtered.length} lists. ${sortNote}.`
+      ? `All ${filtered.length} lists on this page. ${sortNote}.`
       : `Showing ${filtered.length} of ${state.lists.length} lists. ${sortNote}.`;
 
   if (filtered.length === 0) {
@@ -474,17 +480,6 @@ function bindBrowseEvents() {
     renderSorts();
     renderBrowse();
   });
-
-  els.results.addEventListener("click", (event) => {
-    const button = event.target.closest(".toggle-notes");
-    if (!button) return;
-    const interiors = document.getElementById(`notes-${button.dataset.id}`);
-    if (!interiors) return;
-    const open = interiors.hidden;
-    interiors.hidden = !open;
-    button.setAttribute("aria-expanded", String(open));
-    button.textContent = open ? "Hide list interior" : "List interior";
-  });
 }
 
 async function loadLists() {
@@ -509,9 +504,9 @@ async function initFront() {
   state.lists = lists;
 
   const categories = uniqueCategories(lists).length;
-  els.stats.textContent = `${lists.length} lists · ${categories} categories`;
+  setStats(lists.length, categories);
   if (els.doorTitle) els.doorTitle.textContent = parsed.title || "20 must-know lists";
-  if (els.doorIntro) els.doorIntro.textContent = parsed.intro;
+  if (els.doorIntro && parsed.intro) els.doorIntro.textContent = parsed.intro;
   els.meta.textContent = `${joined.length} essential lists, in editorial order`;
   els.results.innerHTML = joined.map(highlightCardHtml).join("");
 }
@@ -526,8 +521,7 @@ async function initBrowse() {
 
   const lists = await loadLists();
   state.lists = lists;
-  const categories = uniqueCategories(lists).length;
-  els.stats.textContent = `${lists.length} lists · ${categories} categories`;
+  setStats(lists.length, uniqueCategories(lists).length);
   renderChips();
   renderSorts();
   renderBrowse();
@@ -541,8 +535,7 @@ function listIdFromPath() {
 async function initList() {
   const lists = await loadLists();
   state.lists = lists;
-  const categories = uniqueCategories(lists).length;
-  els.stats.textContent = `${lists.length} lists · ${categories} categories`;
+  setStats(lists.length, uniqueCategories(lists).length);
 
   const root = document.getElementById("list-root");
   const id = listIdFromPath();
@@ -562,10 +555,7 @@ async function initList() {
 }
 
 async function initAbout() {
-  const lists = await loadLists();
-  state.lists = lists;
-  const categories = uniqueCategories(lists).length;
-  els.stats.textContent = `${lists.length} lists · ${categories} categories`;
+  /* About is static HTML. No catalog count. */
 }
 
 function journeyIdFromPath() {
@@ -590,8 +580,6 @@ function journeyCardHtml(list, rank) {
 async function initJourney() {
   const lists = await loadLists();
   state.lists = lists;
-  const categories = uniqueCategories(lists).length;
-  els.stats.textContent = `${lists.length} lists · ${categories} categories`;
 
   const slug = journeyIdFromPath();
   const journey = JOURNEYS[slug];
@@ -641,7 +629,7 @@ async function init() {
       els.error.textContent =
         error instanceof Error ? error.message : "Could not load the catalog.";
     }
-    if (els.stats) els.stats.textContent = "Catalog unavailable";
+    if (els.stats) els.stats.textContent = "";
     if (els.meta) els.meta.textContent = "";
   }
 }

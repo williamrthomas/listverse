@@ -57,6 +57,9 @@ def main() -> None:
     about = (SITE / "about.html").read_text()
     emit_static(about, DIST / "about", DIST / "about.html")
 
+    browse = (SITE / "browse.html").read_text()
+    emit_static(browse, DIST / "browse", DIST / "browse.html")
+
     journey = (SITE / "journey.html").read_text()
     emit_static(journey, DIST / "journeys" / "agents", DIST / "journeys" / "agents.html")
     emit_static(journey, DIST / "journeys" / "learn", DIST / "journeys" / "learn.html")
