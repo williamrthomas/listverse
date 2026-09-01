@@ -3,16 +3,13 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>ListVerse — curated awesome-lists</title>
-    <meta
-      name="description"
-      content="A public directory of curated awesome-list repositories on GitHub, searchable by name and filterable by category."
-    />
+    <title>Journey — ListVerse</title>
+    <meta name="description" content="An on-site trail through lists in the ListVerse catalog." />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="stylesheet" href="/styles.css" />
   </head>
-  <body data-page="front">
-    <a class="skip-link" href="#essentials">Skip to essential lists</a>
+  <body data-page="journey">
+    <a class="skip-link" href="#journey">Skip to journey</a>
     <header class="masthead">
       <div class="masthead-inner">
         <p class="eyebrow">A meta-directory</p>
@@ -22,25 +19,21 @@
           <em>awesome-list</em> repositories on GitHub — with editorial notes,
           categories, and tags.
         </p>
-        <p class="stats" id="stats" aria-live="polite"></p>
       </div>
     </header>
 
-    <main id="essentials" class="catalog">
-      <h2 class="section-title" id="door-title">20 must-know lists</h2>
-      <p class="door-intro" id="door-intro">
-        These are the 20 most essential curated lists from across the ListVerse
-        collection. Each one is a definitive resource in its category — not just
-        a collection of links, but a carefully maintained knowledge base that
-        thousands of developers rely on daily.
-      </p>
+    <main id="journey" class="catalog">
       <p class="catalog-link">
+        <a href="/">Essential lists</a>
+        ·
         <a href="/journeys/agents/">Agents</a>
         ·
         <a href="/journeys/learn/">Learn</a>
         ·
         <a href="/browse">Browse the full catalog</a>
       </p>
+      <h2 class="section-title" id="journey-title">Journey</h2>
+      <p class="door-intro" id="journey-intro"></p>
       <p class="result-meta" id="result-meta" aria-live="polite"></p>
       <div id="error" class="error" hidden></div>
       <ol id="results" class="results essentials"></ol>

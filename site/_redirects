@@ -1,0 +1,9 @@
+# Pretty URLs: serve folder index.html with 200 (not a 308/404).
+/about /about/index.html 200
+/about/ /about/index.html 200
+/browse /browse/index.html 200
+/browse/ /browse/index.html 200
+/journeys/agents /journeys/agents/index.html 200
+/journeys/agents/ /journeys/agents/index.html 200
+/journeys/learn /journeys/learn/index.html 200
+/journeys/learn/ /journeys/learn/index.html 200

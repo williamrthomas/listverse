@@ -108,7 +108,7 @@
 
 **Goal**: Build a searchable, filterable web directory.
 
-**Status**: MVP shipped — static directory generated from `data/lists.json`, with client-side search and category filters, hosted on Cloudflare Workers (static assets). Remaining Phase 5 items (per-list pages, graph, extra sort/filter dimensions) are still optional.
+**Status**: Discovery index shipped — editorial front door from `HIGHLIGHTS.md`, plus a demoted browse view of the full catalog (search + category AND filters, default sort recently pushed). Hosted on Cloudflare Workers static assets. Remaining Phase 5 items (graph, extra filter dimensions) are still optional.
 
 ### Features
 - Full-text search across names, descriptions, and editorial notes
@@ -124,11 +124,12 @@
 - Minimal JavaScript, fast loading
 
 ### Pages
-- Home: Featured lists, stats dashboard, category overview
-- Browse: Filterable grid/list view of all entries
-- Detail: Per-list page with editorial notes, related lists, freshness score
-- Graph: Interactive relationship visualization
-- About: Methodology, contribution guide, changelog
+- Home: Editorial front door — 20 must-know lists from HIGHLIGHTS.md
+- Journeys: Agents and Learn trails
+- About: How to read the directory and honesty notes
+- Browse: Filterable catalog of all entries (default: recently pushed)
+- Interiors at `/lists/{id}/` from existing JSON fields (no CMS; GitHub is a citation, not a title button)
+- Graph: Interactive relationship visualization (not built)
 
 ---
 
@@ -140,4 +141,4 @@
 | Phase 2 | 200 lists, new categories | Planned |
 | Phase 3 | Relationship graph | Planned |
 | Phase 4 | Automation pipeline | Planned |
-| Phase 5 | Web interface | MVP (search + category filter) |
+| Phase 5 | Web interface | Discovery index (editorial front door + browse) |
