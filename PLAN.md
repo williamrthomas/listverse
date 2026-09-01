@@ -125,10 +125,11 @@
 
 ### Pages
 - Home: Editorial front door — 20 must-know lists from HIGHLIGHTS.md
+- Journeys: Agents and Learn trails
+- About: How to read the directory and honesty notes
 - Browse: Filterable catalog of all entries (default: recently pushed)
 - Interiors at `/lists/{id}/` from existing JSON fields (no CMS; GitHub is a citation, not a title button)
 - Graph: Interactive relationship visualization (not built)
-- About: Methodology, contribution guide, changelog (not built)
 
 ---
 

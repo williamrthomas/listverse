@@ -3,16 +3,13 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Browse — ListVerse</title>
-    <meta
-      name="description"
-      content="Browse the full ListVerse catalog of curated awesome-list repositories on GitHub."
-    />
+    <title>Journey — ListVerse</title>
+    <meta name="description" content="An on-site trail through lists in the ListVerse catalog." />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="stylesheet" href="/styles.css" />
   </head>
-  <body data-page="browse">
-    <a class="skip-link" href="#catalog">Skip to lists</a>
+  <body data-page="journey">
+    <a class="skip-link" href="#journey">Skip to journey</a>
     <header class="masthead">
       <div class="masthead-inner">
         <p class="eyebrow">A meta-directory</p>
@@ -26,43 +23,21 @@
       </div>
     </header>
 
-    <main id="catalog" class="catalog">
+    <main id="journey" class="catalog">
       <p class="catalog-link">
         <a href="/">Essential lists</a>
         ·
         <a href="/journeys/agents/">Agents</a>
         ·
         <a href="/journeys/learn/">Learn</a>
+        ·
+        <a href="/browse.html">Browse the full catalog</a>
       </p>
-      <form class="controls" role="search" aria-label="Filter the directory">
-        <label class="search-label" for="q">Search</label>
-        <input
-          id="q"
-          name="q"
-          type="search"
-          autocomplete="off"
-          placeholder="Search names, descriptions, notes, tags…"
-        />
-        <p class="staff-queries">
-          <a href="/browse.html?q=from-scratch">from-scratch</a>
-          <a href="/browse.html?q=rag">rag</a>
-          <a href="/browse.html?q=osint">osint</a>
-          <a href="/browse.html?q=self-hosted">self-hosted</a>
-          <a href="/browse.html?q=prompt-engineering">prompt-engineering</a>
-        </p>
-        <fieldset class="categories">
-          <legend>Category</legend>
-          <div id="category-filters" class="chips"></div>
-        </fieldset>
-        <fieldset class="sorts">
-          <legend>Sort</legend>
-          <div id="sort-filters" class="chips"></div>
-        </fieldset>
-      </form>
-
+      <h2 class="section-title" id="journey-title">Journey</h2>
+      <p class="door-intro" id="journey-intro"></p>
       <p class="result-meta" id="result-meta" aria-live="polite"></p>
       <div id="error" class="error" hidden></div>
-      <ul id="results" class="results"></ul>
+      <ol id="results" class="results essentials"></ol>
     </main>
 
     <footer class="colophon">

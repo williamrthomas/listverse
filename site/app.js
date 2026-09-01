@@ -15,6 +15,47 @@ const SORTS = [
   { id: "quality", label: "Quality" },
 ];
 
+const JOURNEYS = {
+  agents: {
+    title: "Agents",
+    intro:
+      "A short trail through agent lists in the catalog — directories, frameworks, coding agents, and RAG.",
+    ids: [
+      "awesome-ai-agents",
+      "ai-agents-for-beginners",
+      "awesome-langchain",
+      "awesome-ai-sdks",
+      "autonomous-agents",
+      "awesome-gpt-agents",
+      "rag-from-scratch",
+      "awesome-rag",
+      "crewai",
+      "awesome-copilot",
+      "awesome-cursorrules",
+      "awesome-llm-apps",
+    ],
+  },
+  learn: {
+    title: "Learn",
+    intro:
+      "A short trail through lists people use to learn — primers, project-based work, roadmaps, and courses.",
+    ids: [
+      "prompt-engineering-guide",
+      "learn-prompting",
+      "build-your-own-x",
+      "project-based-learning",
+      "free-programming-books",
+      "system-design-primer",
+      "developer-roadmap",
+      "machine-learning-tutorials",
+      "generative-ai-for-beginners",
+      "llms-from-scratch",
+      "data-engineer-roadmap",
+      "ai-for-beginners",
+    ],
+  },
+};
+
 const page = document.body.dataset.page || "front";
 
 const els = {
@@ -27,6 +68,8 @@ const els = {
   error: document.getElementById("error"),
   doorTitle: document.getElementById("door-title"),
   doorIntro: document.getElementById("door-intro"),
+  journeyTitle: document.getElementById("journey-title"),
+  journeyIntro: document.getElementById("journey-intro"),
 };
 
 /** @type {{ lists: object[], categories: string[], query: string, category: string, sort: string }} */
@@ -518,12 +561,77 @@ async function initList() {
   if (root) root.innerHTML = objectHtml(list, lists);
 }
 
+async function initAbout() {
+  const lists = await loadLists();
+  state.lists = lists;
+  const categories = uniqueCategories(lists).length;
+  els.stats.textContent = `${lists.length} lists · ${categories} categories`;
+}
+
+function journeyIdFromPath() {
+  const match = window.location.pathname.match(/\/journeys\/([^/]+)\/?$/);
+  return match ? decodeURIComponent(match[1]) : "";
+}
+
+function journeyCardHtml(list, rank) {
+  const { stars, meta } = cardMeta(list);
+  return `<li class="card">
+    <div class="card-top">
+      <h2><span class="rank">${escapeHtml(String(rank))}</span><a href="${escapeAttr(
+        listHref(list)
+      )}">${escapeHtml(list.name)}</a></h2>
+      <span class="stars" title="GitHub stars">★ ${escapeHtml(stars)}</span>
+    </div>
+    ${meta}
+    <p class="description">${escapeHtml(list.description || "")}</p>
+  </li>`;
+}
+
+async function initJourney() {
+  const lists = await loadLists();
+  state.lists = lists;
+  const categories = uniqueCategories(lists).length;
+  els.stats.textContent = `${lists.length} lists · ${categories} categories`;
+
+  const slug = journeyIdFromPath();
+  const journey = JOURNEYS[slug];
+  if (!journey) {
+    document.title = "Not found — ListVerse";
+    if (els.error) {
+      els.error.hidden = false;
+      els.error.textContent = "That journey isn’t in the catalog.";
+    }
+    if (els.results) els.results.innerHTML = "";
+    return;
+  }
+
+  document.title = `${journey.title} — ListVerse`;
+  if (els.journeyTitle) els.journeyTitle.textContent = journey.title;
+  if (els.journeyIntro) els.journeyIntro.textContent = journey.intro;
+
+  const byId = new Map(lists.map((list) => [list.id, list]));
+  const cards = [];
+  for (const id of journey.ids) {
+    const list = byId.get(id);
+    if (!list) continue;
+    cards.push(journeyCardHtml(list, cards.length + 1));
+  }
+  if (els.meta) {
+    els.meta.textContent = `${cards.length} lists, in trail order`;
+  }
+  if (els.results) els.results.innerHTML = cards.join("");
+}
+
 async function init() {
   try {
     if (page === "browse") {
       await initBrowse();
     } else if (page === "list") {
       await initList();
+    } else if (page === "about") {
+      await initAbout();
+    } else if (page === "journey") {
+      await initJourney();
     } else {
       await initFront();
     }

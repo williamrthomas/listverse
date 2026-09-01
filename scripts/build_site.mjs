@@ -28,6 +28,20 @@ for (const list of catalog) {
 }
 rmSync(join(dist, "list.html"), { force: true });
 
+function emitStatic(template, destDir, destFile) {
+  mkdirSync(destDir, { recursive: true });
+  writeFileSync(join(destDir, "index.html"), template);
+  writeFileSync(destFile, template);
+}
+
+const about = readFileSync(join(site, "about.html"), "utf8");
+emitStatic(about, join(dist, "about"), join(dist, "about.html"));
+
+const journey = readFileSync(join(site, "journey.html"), "utf8");
+emitStatic(journey, join(dist, "journeys", "agents"), join(dist, "journeys", "agents.html"));
+emitStatic(journey, join(dist, "journeys", "learn"), join(dist, "journeys", "learn.html"));
+rmSync(join(dist, "journey.html"), { force: true });
+
 console.log(
-  `Built ${dist} (${statSync(listsPath).size} bytes of catalog data, ${catalog.length} interiors)`
+  `Built ${dist} (${statSync(listsPath).size} bytes of catalog data, ${catalog.length} interiors, about + 2 journeys)`
 );

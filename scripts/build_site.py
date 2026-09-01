@@ -48,8 +48,24 @@ def main() -> None:
     if template_copy.exists():
         template_copy.unlink()
 
+    def emit_static(content: str, dest_dir: Path, dest_file: Path) -> None:
+        dest_dir.mkdir(parents=True, exist_ok=True)
+        (dest_dir / "index.html").write_text(content)
+        dest_file.parent.mkdir(parents=True, exist_ok=True)
+        dest_file.write_text(content)
+
+    about = (SITE / "about.html").read_text()
+    emit_static(about, DIST / "about", DIST / "about.html")
+
+    journey = (SITE / "journey.html").read_text()
+    emit_static(journey, DIST / "journeys" / "agents", DIST / "journeys" / "agents.html")
+    emit_static(journey, DIST / "journeys" / "learn", DIST / "journeys" / "learn.html")
+    journey_template = DIST / "journey.html"
+    if journey_template.exists():
+        journey_template.unlink()
+
     print(
-        f"Built {DIST} ({LISTS.stat().st_size} bytes of catalog data, {len(catalog)} interiors)"
+        f"Built {DIST} ({LISTS.stat().st_size} bytes of catalog data, {len(catalog)} interiors, about + 2 journeys)"
     )
 
 
