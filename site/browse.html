@@ -3,16 +3,16 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>ListVerse — curated awesome-lists</title>
+    <title>Browse — ListVerse</title>
     <meta
       name="description"
-      content="A public directory of curated awesome-list repositories on GitHub, searchable by name and filterable by category."
+      content="Browse the full ListVerse catalog of curated awesome-list repositories on GitHub."
     />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="stylesheet" href="/styles.css" />
   </head>
-  <body data-page="front">
-    <a class="skip-link" href="#essentials">Skip to essential lists</a>
+  <body data-page="browse">
+    <a class="skip-link" href="#catalog">Skip to lists</a>
     <header class="masthead">
       <div class="masthead-inner">
         <p class="eyebrow">A meta-directory</p>
@@ -26,18 +26,32 @@
       </div>
     </header>
 
-    <main id="essentials" class="catalog">
-      <h2 class="section-title" id="door-title">20 must-know lists</h2>
-      <p class="door-intro" id="door-intro"></p>
+    <main id="catalog" class="catalog">
       <p class="catalog-link">
-        <a href="/browse.html">Browse the full catalog</a>
+        <a href="/">Essential lists</a>
       </p>
+      <form class="controls" role="search" aria-label="Filter the directory">
+        <label class="search-label" for="q">Search</label>
+        <input
+          id="q"
+          name="q"
+          type="search"
+          autocomplete="off"
+          placeholder="Search names, descriptions, notes, tags…"
+        />
+        <fieldset class="categories">
+          <legend>Category</legend>
+          <div id="category-filters" class="chips"></div>
+        </fieldset>
+        <fieldset class="sorts">
+          <legend>Sort</legend>
+          <div id="sort-filters" class="chips"></div>
+        </fieldset>
+      </form>
+
       <p class="result-meta" id="result-meta" aria-live="polite"></p>
       <div id="error" class="error" hidden></div>
-      <ol id="results" class="results essentials"></ol>
-      <p class="catalog-link">
-        <a href="/browse.html">Browse the full catalog</a>
-      </p>
+      <ul id="results" class="results"></ul>
     </main>
 
     <footer class="colophon">

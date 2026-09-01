@@ -1,33 +1,42 @@
+import {
+  formatCommitDate,
+  formatStars,
+  hasFeaturedExample,
+  joinHighlights,
+  parseHighlights,
+} from "./highlights.js";
+
 const DATA_URL = "/data/lists.json";
+const HIGHLIGHTS_URL = "/HIGHLIGHTS.md";
+const SORTS = [
+  { id: "pushed", label: "Recently pushed" },
+  { id: "stars", label: "Stars" },
+  { id: "name", label: "Name" },
+  { id: "quality", label: "Quality" },
+];
+
+const page = document.body.dataset.page || "front";
 
 const els = {
   stats: document.getElementById("stats"),
   search: document.getElementById("q"),
   chips: document.getElementById("category-filters"),
+  sorts: document.getElementById("sort-filters"),
   meta: document.getElementById("result-meta"),
   results: document.getElementById("results"),
   error: document.getElementById("error"),
+  doorTitle: document.getElementById("door-title"),
+  doorIntro: document.getElementById("door-intro"),
 };
 
-/** @type {{ lists: object[], categories: string[], query: string, category: string }} */
+/** @type {{ lists: object[], categories: string[], query: string, category: string, sort: string }} */
 const state = {
   lists: [],
   categories: [],
   query: "",
   category: "",
+  sort: "pushed",
 };
-
-function formatStars(count, approx) {
-  if (typeof count === "number" && Number.isFinite(count)) {
-    if (count >= 1000) {
-      const value = count / 1000;
-      const digits = count >= 10000 ? 0 : 1;
-      return `${value.toFixed(digits).replace(/\.0$/, "")}k`;
-    }
-    return String(count);
-  }
-  return approx || "—";
-}
 
 function uniqueCategories(lists) {
   const counts = new Map();
@@ -58,11 +67,33 @@ function matches(list, query, category) {
   return haystack(list).includes(query);
 }
 
+function compareLists(a, b, sort) {
+  if (sort === "stars") {
+    return (b.stars_count || 0) - (a.stars_count || 0);
+  }
+  if (sort === "name") {
+    return (a.name || "").localeCompare(b.name || "", undefined, { sensitivity: "base" });
+  }
+  if (sort === "quality") {
+    return (
+      (b.quality_score || 0) - (a.quality_score || 0) ||
+      (a.name || "").localeCompare(b.name || "", undefined, { sensitivity: "base" })
+    );
+  }
+  return (
+    (b.last_commit_date || "").localeCompare(a.last_commit_date || "") ||
+    (b.stars_count || 0) - (a.stars_count || 0)
+  );
+}
+
 function parseParams() {
   const params = new URLSearchParams(window.location.search);
+  const sort = params.get("sort") || "pushed";
+  const known = SORTS.some((item) => item.id === sort);
   return {
     query: (params.get("q") || "").trim(),
     category: params.get("category") || "",
+    sort: known ? sort : "pushed",
   };
 }
 
@@ -70,12 +101,14 @@ function writeParams() {
   const params = new URLSearchParams();
   if (state.query) params.set("q", state.query);
   if (state.category) params.set("category", state.category);
+  if (state.sort && state.sort !== "pushed") params.set("sort", state.sort);
   const next = params.toString();
   const url = next ? `?${next}` : window.location.pathname;
   history.replaceState(null, "", url);
 }
 
 function renderChips() {
+  if (!els.chips) return;
   const counts = uniqueCategories(state.lists);
   state.categories = counts.map(([name]) => name);
   const total = state.lists.length;
@@ -92,41 +125,107 @@ function renderChips() {
   els.chips.innerHTML = buttons.join("");
 }
 
-function render() {
-  const query = state.query.toLowerCase();
-  const filtered = state.lists
-    .filter((list) => matches(list, query, state.category))
-    .sort((a, b) => (b.stars_count || 0) - (a.stars_count || 0));
+function renderSorts() {
+  if (!els.sorts) return;
+  els.sorts.innerHTML = SORTS.map(
+    (item) =>
+      `<button type="button" class="chip" data-sort="${escapeAttr(item.id)}" aria-pressed="${
+        state.sort === item.id
+      }">${escapeHtml(item.label)}</button>`
+  ).join("");
+}
 
-  els.meta.textContent =
-    filtered.length === state.lists.length
-      ? `Showing all ${filtered.length} lists`
-      : `Showing ${filtered.length} of ${state.lists.length} lists`;
-
-  if (filtered.length === 0) {
-    els.results.innerHTML = `<li class="empty">No lists match that search.</li>`;
-    return;
+function interiorsHtml(list) {
+  const blocks = [];
+  if (hasFeaturedExample(list)) {
+    const example = list.featured_example;
+    const label = example.name || example.url;
+    const linked = example.url
+      ? `<a href="${escapeAttr(example.url)}" rel="noopener noreferrer">${escapeHtml(label)}</a>`
+      : escapeHtml(label);
+    const why = example.why ? ` — ${escapeHtml(example.why)}` : "";
+    blocks.push(
+      `<div class="interior-block"><h3>Featured example</h3><p>${linked}${why}</p></div>`
+    );
   }
+  if (list.getting_started) {
+    blocks.push(
+      `<div class="interior-block"><h3>Getting started</h3><p>${escapeHtml(
+        list.getting_started
+      )}</p></div>`
+    );
+  }
+  if (Array.isArray(list.best_sections) && list.best_sections.length) {
+    const items = list.best_sections.map((section) => `<li>${escapeHtml(section)}</li>`).join("");
+    blocks.push(
+      `<div class="interior-block"><h3>Best sections</h3><ul class="sections">${items}</ul></div>`
+    );
+  }
+  if (Array.isArray(list.suggested_projects) && list.suggested_projects.length) {
+    const items = list.suggested_projects.map((project) => `<li>${escapeHtml(project)}</li>`).join("");
+    blocks.push(
+      `<div class="interior-block"><h3>Suggested projects</h3><ul class="projects">${items}</ul></div>`
+    );
+  }
+  if (list.editorial_notes) {
+    blocks.push(
+      `<div class="interior-block"><h3>Editorial note</h3><p>${escapeHtml(
+        list.editorial_notes
+      )}</p></div>`
+    );
+  }
+  return blocks.join("");
+}
 
-  els.results.innerHTML = filtered.map(cardHtml).join("");
+function cardMeta(list) {
+  const stars = formatStars(list.stars_count);
+  const pushed = formatCommitDate(list.last_commit_date);
+  const subcategory = list.subcategory ? `<span>${escapeHtml(list.subcategory)}</span>` : "";
+  const pushedHtml = pushed ? `<span>Last pushed ${escapeHtml(pushed)}</span>` : "";
+  return {
+    stars,
+    meta: `<div class="meta">
+      <span class="category-label">${escapeHtml(list.category || "")}</span>
+      ${subcategory}
+      <span>@${escapeHtml(list.maintainer || "")}</span>
+      ${pushedHtml}
+    </div>`,
+  };
+}
+
+function highlightCardHtml(entry) {
+  const list = entry.list;
+  const name = list?.name || entry.name;
+  const url = list?.github_url || entry.github_url;
+  const { stars, meta } = list
+    ? cardMeta(list)
+    : { stars: "—", meta: "" };
+  const interiors = list ? interiorsHtml(list) : "";
+  return `<li class="card">
+    <div class="card-top">
+      <h2><span class="rank">${escapeHtml(String(entry.rank))}</span><a href="${escapeAttr(
+        url
+      )}" rel="noopener noreferrer">${escapeHtml(name)}</a></h2>
+      <span class="stars" title="GitHub stars">★ ${escapeHtml(stars)}</span>
+    </div>
+    ${meta}
+    <p class="description">${escapeHtml(entry.blurb)}</p>
+    ${interiors ? `<div class="interiors">${interiors}</div>` : ""}
+  </li>`;
 }
 
 function cardHtml(list) {
-  const stars = formatStars(list.stars_count, list.stars_approx);
+  const { stars, meta } = cardMeta(list);
   const tags = (list.tags || [])
     .slice(0, 6)
     .map((tag) => `<li>${escapeHtml(tag)}</li>`)
     .join("");
-  const notes = list.editorial_notes
+  const interiors = interiorsHtml(list);
+  const toggle = interiors
     ? `<button type="button" class="toggle-notes" aria-expanded="false" data-id="${escapeAttr(
         list.id
-      )}">Editorial note</button>
-       <p class="notes" id="notes-${escapeAttr(list.id)}" hidden>${escapeHtml(
-          list.editorial_notes
-        )}</p>`
-    : "";
-  const subcategory = list.subcategory
-    ? `<span>${escapeHtml(list.subcategory)}</span>`
+      )}">List interior</button>
+       <div class="interiors" id="notes-${escapeAttr(list.id)}" hidden>${interiors}</div>`
     : "";
   return `<li class="card">
     <div class="card-top">
@@ -135,15 +234,35 @@ function cardHtml(list) {
       )}</a></h2>
       <span class="stars" title="GitHub stars">★ ${escapeHtml(stars)}</span>
     </div>
-    <div class="meta">
-      <span class="category-label">${escapeHtml(list.category || "")}</span>
-      ${subcategory}
-      <span>@${escapeHtml(list.maintainer || "")}</span>
-    </div>
+    ${meta}
     <p class="description">${escapeHtml(list.description || "")}</p>
     ${tags ? `<ul class="tags">${tags}</ul>` : ""}
-    ${notes}
+    ${toggle}
   </li>`;
+}
+
+function sortLabel(sort) {
+  return SORTS.find((item) => item.id === sort)?.label || "Recently pushed";
+}
+
+function renderBrowse() {
+  const query = state.query.toLowerCase();
+  const filtered = state.lists
+    .filter((list) => matches(list, query, state.category))
+    .sort((a, b) => compareLists(a, b, state.sort));
+
+  const sortNote = `Sorted by ${sortLabel(state.sort)}`;
+  els.meta.textContent =
+    filtered.length === state.lists.length
+      ? `Showing all ${filtered.length} lists. ${sortNote}.`
+      : `Showing ${filtered.length} of ${state.lists.length} lists. ${sortNote}.`;
+
+  if (filtered.length === 0) {
+    els.results.innerHTML = `<li class="empty">No lists match that search.</li>`;
+    return;
+  }
+
+  els.results.innerHTML = filtered.map(cardHtml).join("");
 }
 
 function escapeHtml(value) {
@@ -158,61 +277,104 @@ function escapeAttr(value) {
   return escapeHtml(value).replaceAll("'", "&#39;");
 }
 
-function bindEvents() {
-  els.search.addEventListener("input", () => {
+function bindBrowseEvents() {
+  els.search?.addEventListener("input", () => {
     state.query = els.search.value.trim();
     writeParams();
-    render();
+    renderBrowse();
   });
 
-  els.chips.addEventListener("click", (event) => {
+  els.chips?.addEventListener("click", (event) => {
     const button = event.target.closest("[data-category]");
     if (!button) return;
     state.category = button.getAttribute("data-category") || "";
     writeParams();
     renderChips();
-    render();
+    renderBrowse();
+  });
+
+  els.sorts?.addEventListener("click", (event) => {
+    const button = event.target.closest("[data-sort]");
+    if (!button) return;
+    state.sort = button.getAttribute("data-sort") || "pushed";
+    writeParams();
+    renderSorts();
+    renderBrowse();
   });
 
   els.results.addEventListener("click", (event) => {
     const button = event.target.closest(".toggle-notes");
     if (!button) return;
-    const notes = document.getElementById(`notes-${button.dataset.id}`);
-    if (!notes) return;
-    const open = notes.hidden;
-    notes.hidden = !open;
+    const interiors = document.getElementById(`notes-${button.dataset.id}`);
+    if (!interiors) return;
+    const open = interiors.hidden;
+    interiors.hidden = !open;
     button.setAttribute("aria-expanded", String(open));
-    button.textContent = open ? "Hide editorial note" : "Editorial note";
+    button.textContent = open ? "Hide list interior" : "List interior";
   });
 }
 
-async function init() {
+async function loadLists() {
+  const response = await fetch(DATA_URL);
+  if (!response.ok) {
+    throw new Error(`Could not load catalog (${response.status})`);
+  }
+  const lists = await response.json();
+  if (!Array.isArray(lists)) {
+    throw new Error("Catalog data is not a list");
+  }
+  return lists;
+}
+
+async function initFront() {
+  const [lists, highlightsRes] = await Promise.all([loadLists(), fetch(HIGHLIGHTS_URL)]);
+  if (!highlightsRes.ok) {
+    throw new Error(`Could not load highlights (${highlightsRes.status})`);
+  }
+  const parsed = parseHighlights(await highlightsRes.text());
+  const joined = joinHighlights(parsed.lists, lists);
+  state.lists = lists;
+
+  const categories = uniqueCategories(lists).length;
+  els.stats.textContent = `${lists.length} lists · ${categories} categories`;
+  if (els.doorTitle) els.doorTitle.textContent = parsed.title || "20 must-know lists";
+  if (els.doorIntro) els.doorIntro.textContent = parsed.intro;
+  els.meta.textContent = `${joined.length} essential lists, in editorial order`;
+  els.results.innerHTML = joined.map(highlightCardHtml).join("");
+}
+
+async function initBrowse() {
   const params = parseParams();
   state.query = params.query;
   state.category = params.category;
-  els.search.value = state.query;
-  bindEvents();
+  state.sort = params.sort;
+  if (els.search) els.search.value = state.query;
+  bindBrowseEvents();
 
+  const lists = await loadLists();
+  state.lists = lists;
+  const categories = uniqueCategories(lists).length;
+  els.stats.textContent = `${lists.length} lists · ${categories} categories`;
+  renderChips();
+  renderSorts();
+  renderBrowse();
+}
+
+async function init() {
   try {
-    const response = await fetch(DATA_URL);
-    if (!response.ok) {
-      throw new Error(`Could not load catalog (${response.status})`);
+    if (page === "browse") {
+      await initBrowse();
+    } else {
+      await initFront();
     }
-    const lists = await response.json();
-    if (!Array.isArray(lists)) {
-      throw new Error("Catalog data is not a list");
-    }
-    state.lists = lists;
-    const categories = uniqueCategories(lists).length;
-    els.stats.textContent = `${lists.length} lists · ${categories} categories`;
-    renderChips();
-    render();
   } catch (error) {
-    els.error.hidden = false;
-    els.error.textContent =
-      error instanceof Error ? error.message : "Could not load the catalog.";
-    els.stats.textContent = "Catalog unavailable";
-    els.meta.textContent = "";
+    if (els.error) {
+      els.error.hidden = false;
+      els.error.textContent =
+        error instanceof Error ? error.message : "Could not load the catalog.";
+    }
+    if (els.stats) els.stats.textContent = "Catalog unavailable";
+    if (els.meta) els.meta.textContent = "";
   }
 }
 

@@ -10,6 +10,7 @@ ROOT = Path(__file__).resolve().parent.parent
 SITE = ROOT / "site"
 DIST = ROOT / "dist"
 LISTS = ROOT / "data" / "lists.json"
+HIGHLIGHTS = ROOT / "HIGHLIGHTS.md"
 
 
 def main() -> None:
@@ -17,6 +18,8 @@ def main() -> None:
         raise SystemExit(f"Missing site directory: {SITE}")
     if not LISTS.is_file():
         raise SystemExit(f"Missing catalog data: {LISTS}")
+    if not HIGHLIGHTS.is_file():
+        raise SystemExit(f"Missing highlights: {HIGHLIGHTS}")
 
     if DIST.exists():
         shutil.rmtree(DIST)
@@ -25,6 +28,7 @@ def main() -> None:
     data_dir = DIST / "data"
     data_dir.mkdir(exist_ok=True)
     shutil.copy2(LISTS, data_dir / "lists.json")
+    shutil.copy2(HIGHLIGHTS, DIST / "HIGHLIGHTS.md")
     print(f"Built {DIST} ({LISTS.stat().st_size} bytes of catalog data)")
 
 

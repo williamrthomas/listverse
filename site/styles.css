@@ -335,9 +335,111 @@ h1 {
   font-size: 0.88rem;
 }
 
+.section-title {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: clamp(1.6rem, 3.2vw, 2.2rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+
+.door-intro {
+  max-width: 42rem;
+  margin: 0.7rem 0 0;
+  color: var(--muted);
+}
+
+.catalog-link {
+  margin: 1.25rem 0 0;
+}
+
+.catalog-link a {
+  font-size: 0.95rem;
+}
+
+.rank {
+  font-family: var(--serif);
+  color: var(--muted);
+  font-weight: 600;
+  margin-right: 0.45rem;
+}
+
+.interiors {
+  margin-top: 0.85rem;
+  padding-top: 0.75rem;
+  border-top: 1px dashed var(--rule);
+}
+
+.interiors[hidden] {
+  display: none;
+}
+
+.interior-block h3 {
+  margin: 0.8rem 0 0.3rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.interior-block:first-child h3 {
+  margin-top: 0;
+}
+
+.interior-block p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.sections {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.sections li {
+  font-size: 0.75rem;
+  background: var(--bg-deep);
+  border-radius: 999px;
+  padding: 0.15rem 0.5rem;
+  color: var(--muted);
+}
+
+.projects {
+  margin: 0;
+  padding-left: 1.15rem;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.sorts {
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+
+.sorts legend {
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 0.55rem;
+}
+
 @media (min-width: 860px) {
   .results {
     grid-template-columns: 1fr 1fr;
+  }
+
+  .results.essentials {
+    grid-template-columns: 1fr;
   }
 }
 
